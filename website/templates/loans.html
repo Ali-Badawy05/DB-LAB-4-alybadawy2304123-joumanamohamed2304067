@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "macros.html" import table %}
+{% block title %}Loans{% endblock %}
+{% block card_class %}wide{% endblock %}
+{% block content %}
+{% set page_title = "Loans" %}
+{% include "_header.html" %}
+<section>
+  <h2>Loans not returned yet <span class="count">({{ open_loans|length }})</span></h2>
+  {{ table([('loan_id', 'Loan'), ('book', 'Book'), ('member', 'Member'), ('loan_date', 'Loan date')], open_loans, 'All books were returned.') }}
+</section>
+<section>
+  <h2>Members who never borrowed a book <span class="count">({{ idle_members|length }})</span></h2>
+  {{ table([('member_id', 'ID'), ('name', 'Name'), ('email', 'Email')], idle_members, 'Every member borrowed at least one book.') }}
+</section>
+<section>
+  <h2>Books that were never borrowed <span class="count">({{ unborrowed|length }})</span></h2>
+  {{ table([('book_id', 'ID'), ('title', 'Title')], unborrowed, 'Every book was borrowed at least once.') }}
+</section>
+{% endblock %}

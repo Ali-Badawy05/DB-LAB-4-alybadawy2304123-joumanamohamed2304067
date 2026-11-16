@@ -1,0 +1,13 @@
+<header class="topbar">
+  <h1>{{ page_title }}</h1>
+  <div class="who">
+    <a href="{{ url_for('index') }}">To-Do</a>
+    <span>Hi, {{ session['name'] }}</span>
+    <form method="post" action="{{ url_for('logout') }}"><button type="submit">Log out</button></form>
+  </div>
+</header>
+<nav class="tabs">
+  {% for endpoint, label in [('library', 'Library'), ('search_books', 'Search'), ('catalogue', 'Catalogue'), ('reports', 'Reports'), ('loans', 'Loans'), ('most_borrowed', 'Most borrowed'), ('authors_books', 'Authors and books')] %}
+  <a href="{{ url_for(endpoint) }}" class="{{ 'active' if request.endpoint == endpoint }}">{{ label }}</a>
+  {% endfor %}
+</nav>

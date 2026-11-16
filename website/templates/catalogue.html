@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "macros.html" import table %}
+{% block title %}Catalogue{% endblock %}
+{% block card_class %}wide{% endblock %}
+{% block content %}
+{% set page_title = "Catalogue" %}
+{% include "_header.html" %}
+<section>
+  <h2>All books <span class="count">({{ books|length }})</span></h2>
+  {{ table([('book_id', 'ID'), ('title', 'Title'), ('price', 'Price'), ('publish_year', 'Year'), ('author', 'Author'), ('publisher', 'Publisher'), ('category', 'Category')], books, 'There are no books yet.') }}
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "macros.html" import table %}
+{% block title %}Most borrowed{% endblock %}
+{% block card_class %}wide{% endblock %}
+{% block content %}
+{% set page_title = "Most borrowed" %}
+{% include "_header.html" %}
+<section>
+  <h2>The 3 books with the most loans</h2>
+  {{ table([('book_id', 'ID'), ('title', 'Title'), ('loans', 'Loans')], top_books, 'There are no loans yet.') }}
+</section>
+<section>
+  <h2>The member with the most loans</h2>
+  {{ table([('member_id', 'ID'), ('name', 'Name'), ('loans', 'Loans')], top_member, 'There are no loans yet.') }}
+</section>
+{% endblock %}

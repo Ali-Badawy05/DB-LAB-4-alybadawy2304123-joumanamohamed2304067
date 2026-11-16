@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "macros.html" import table %}
+{% block title %}Authors and books{% endblock %}
+{% block card_class %}wide{% endblock %}
+{% block content %}
+{% set page_title = "Authors and books" %}
+{% include "_header.html" %}
+<section>
+  <h2>Every author with the number of books</h2>
+  {{ table([('author_id', 'ID'), ('author', 'Author'), ('books', 'Books')], counts, 'There are no authors yet.') }}
+</section>
+<section>
+  <h2>Books whose author and publisher come from the same country</h2>
+  {{ table([('book_id', 'ID'), ('title', 'Title'), ('author', 'Author'), ('publisher', 'Publisher'), ('country', 'Country')], same_country, 'No book matches.') }}
+</section>
+{% endblock %}

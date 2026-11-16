@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Add book' if mode == 'add' else 'Edit book' }}{% endblock %}
+{% block content %}
+<h1>{{ 'Add a book' if mode == 'add' else 'Edit book' }}</h1>
+{% if not authors or not publishers or not categories %}
+<p class="empty">A book needs at least one author, one publisher and one category. <a href="{{ url_for('author_add') }}">Add an author</a> first if there is none.</p>
+{% else %}
+<form method="post" enctype="multipart/form-data" novalidate data-form="book"
+      action="{{ url_for('book_add') if mode == 'add' else url_for('book_edit', book_id=form.book_id) }}">
+  <ul class="errors" role="alert">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  <label>Title <input type="text" name="title" maxlength="200" value="{{ form.get('title', '') }}"></label>
+  <label>Price <input type="text" name="price" inputmode="decimal" placeholder="e.g. 12.50" value="{{ form.get('price', '') }}"></label>
+  <label>Publish year <input type="text" name="publish_year" inputmode="numeric" maxlength="4" placeholder="e.g. 1999" value="{{ form.get('publish_year', '') }}"></label>
+  <label>Author
+    <select name="author_id">
+      <option value="">Choose an author...</option>
+      {% for a in authors %}
+      <option value="{{ a.author_id }}" {{ 'selected' if form.get('author_id') == a.author_id|string }}>{{ a.author_id }} - {{ a.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Publisher
+    <select name="publisher_id">
+      <option value="">Choose a publisher...</option>
+      {% for p in publishers %}
+      <option value="{{ p.publisher_id }}" {{ 'selected' if form.get('publisher_id') == p.publisher_id|string }}>{{ p.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Category
+    <select name="category_id">
+      <option value="">Choose a category...</option>
+      {% for c in categories %}
+      <option value="{{ c.category_id }}" {{ 'selected' if form.get('category_id') == c.category_id|string }}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Cover (optional)
+    {% if current_image %}<span class="current"><img class="thumb" src="{{ url_for('static', filename='uploads/' ~ current_image) }}" alt="Current cover"> Current cover. Choose a file only to replace it.</span>{% endif %}
+    <input type="file" name="cover" accept="image/png,image/jpeg,image/gif,image/webp">
+  </label>
+  <div class="form-actions">
+    <button type="submit" class="primary">{{ 'Add book' if mode == 'add' else 'Save changes' }}</button>
+    <a class="btn" href="{{ url_for('library') }}">Cancel</a>
+  </div>
+</form>
+{% endif %}
+{% endblock %}

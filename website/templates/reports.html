@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "macros.html" import table %}
+{% block title %}Reports{% endblock %}
+{% block card_class %}wide{% endblock %}
+{% block content %}
+{% set page_title = "Reports" %}
+{% include "_header.html" %}
+<section>
+  <h2>Books and average price of each category</h2>
+  {{ table([('category', 'Category'), ('books', 'Books'), ('average_price', 'Average price')], by_category, 'There are no categories yet.') }}
+</section>
+<section>
+  <h2>Authors who wrote at least 2 books</h2>
+  {{ table([('author_id', 'ID'), ('author', 'Author'), ('books', 'Books')], prolific, 'No author wrote 2 books or more.') }}
+</section>
+<section>
+  <h2>Prices of the whole library</h2>
+  {{ table([('total_price', 'Total'), ('smallest_price', 'Smallest'), ('largest_price', 'Largest')], [totals] if totals.total_price is not none else [], 'There are no books yet.') }}
+</section>
+{% endblock %}

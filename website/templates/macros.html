@@ -1,0 +1,16 @@
+{% macro table(cols, rows, empty) %}
+{% if rows %}
+<div class="table-wrap">
+  <table>
+    <thead><tr>{% for key, label in cols %}<th>{{ label }}</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>{% for key, label in cols %}<td>{{ r[key] if r[key] is not none else '-' }}</td>{% endfor %}</tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="empty">{{ empty }}</p>
+{% endif %}
+{% endmacro %}
